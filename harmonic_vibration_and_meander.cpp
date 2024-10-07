@@ -116,7 +116,7 @@ QVector<double> HarmonicVibrationAndMeander::getSpectrum(const std::vector<doubl
     for (int i = 0; i < N / 2; i++) {
         double real = out[i][0];
         double imagine = out[i][1];
-        spectrum[i] = sqrt(pow(real, 2) + pow(imagine, 2));
+        spectrum[i] = sqrt(pow(real, 2) + pow(imagine, 2)); //module of complex number
     }
 
     fftw_destroy_plan(plan);
