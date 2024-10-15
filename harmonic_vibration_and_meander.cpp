@@ -29,26 +29,20 @@ HarmonicVibrationAndMeander::~HarmonicVibrationAndMeander()
     delete ui;
 }
 
-std::vector<double> qVectorToStdVector(QVector<double> &signal)
-{
-    std::vector result(signal.begin(), signal.end());
-    return result;
-}
-
 void HarmonicVibrationAndMeander::setupGraph()
 {
-    x.resize(101);
-    y.resize(101);
+    x.resize(1001);
+    y.resize(1001);
     const int currentIndex = ui->comboBox->currentIndex();
     ui->customPlot->clearGraphs();
 
     const double frequency = ui->spinBox->value();
     constexpr double amplitude = 1;
-    constexpr int pointCount = 101;
+    constexpr int pointCount = 1001;
 
     if (currentIndex == 0 || currentIndex == 1) {
         for (int i = 0; i < pointCount; ++i) {
-            x[i] = i / 50.0 - 1;
+            x[i] = i / 500.0 - 1;
 
             if (currentIndex == 0) {
                 //harmonic vibration
@@ -69,9 +63,9 @@ void HarmonicVibrationAndMeander::setupGraph()
         std::vector<double> signal(pointCount);
         for (int i = 0; i < pointCount; ++i) {
             if (currentIndex == 2) {
-                signal[i] = amplitude * sin(2 * M_PI * frequency * i / 50.0);
+                signal[i] = amplitude * sin(2 * M_PI * frequency * i / 500.0);
             } else {
-                signal[i] = (sin(2 * M_PI * frequency * i / 50) >= 0) ? 1 : 0;
+                signal[i] = (sin(2 * M_PI * frequency * i / 500) >= 0) ? 1 : 0;
             }
         }
 
@@ -79,7 +73,7 @@ void HarmonicVibrationAndMeander::setupGraph()
         x.clear();
         x.resize(spectrum.size());
         for (int i = 0; i < spectrum.size(); ++i) {
-            x[i] = i * (1.0 / pointCount * 50.0);
+            x[i] = i * (1.0 / pointCount * 500.0);
         }
         y.clear();
         y.resize(spectrum.size());
@@ -87,8 +81,8 @@ void HarmonicVibrationAndMeander::setupGraph()
 
         ui->customPlot->xAxis->setLabel("Частота (Гц)");
         ui->customPlot->yAxis->setLabel("Амплитуда");
-        ui->customPlot->xAxis->setRange(0, 50);
-        ui->customPlot->yAxis->setRange(0, *std::max_element(y.begin(), y.end()) + 10);
+        ui->customPlot->xAxis->setRange(-0.5, 50);
+        ui->customPlot->yAxis->setRange(-0.5, 500);
     }
 
     ui->customPlot->addGraph();
